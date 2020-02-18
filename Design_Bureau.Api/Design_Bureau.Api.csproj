@@ -8,4 +8,8 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Design_Bureau.DAL\Design_Bureau.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,6 @@
 using System;
 
-namespace Design_Bureau.Models
+namespace Design_Bureau.Api.Models
 {
     public class ErrorViewModel
     {

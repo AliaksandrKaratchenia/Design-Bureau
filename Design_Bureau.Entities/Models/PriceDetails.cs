@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Design_Bureau.Entities;
-
-namespace Design_Bureau.Entities
+﻿namespace Design_Bureau.Entities
 {
     public class PriceDetails: BaseEntity
     {

@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Autofac;
 using Design_Bureau.Api.Configuration;
-using Design_Bureau.DAL;
+using Design_Bureau.Api.Modules;
 using Design_Bureau.DbExtensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,6 +19,11 @@ namespace Design_Bureau.Api
         }
 
         public IConfiguration Configuration { get; }
+
+        public static void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new DalModule());
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Design_Bureau.Entities
+﻿namespace Design_Bureau.Entities
 {
     public class Designer: BaseEntity
     {

@@ -1,4 +1,5 @@
-﻿using Design_Bureau.DAL.Configurations;
+﻿using Design_Bureau.BLL.Authentication__Authorization.Models;
+using Design_Bureau.DAL.Configurations;
 using Design_Bureau.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,8 @@ namespace Design_Bureau.DAL
             : base(options)
         {
         }
+
+        //public DbSet<User> Users { get; set; }
 
         public DbSet<MultiStoreyHouseProject> MultiStoreyHouseProjects { get; set; }
 

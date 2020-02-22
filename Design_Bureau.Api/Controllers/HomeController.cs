@@ -1,12 +1,21 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Design_Bureau.Api.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Design_Bureau.Api.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
+        [Authorize(Roles ="Admin, User")]
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        [Authorize(Roles ="Admin")]
+        public IActionResult Setting()
         {
             return View();
         }

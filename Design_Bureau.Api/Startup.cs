@@ -2,12 +2,18 @@
 using Design_Bureau.Api.Configuration;
 using Design_Bureau.Api.Modules;
 using Design_Bureau.DbExtensions;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Design_Bureau.Api
 {
@@ -35,6 +41,16 @@ namespace Design_Bureau.Api
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+
+
+
+
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+
+
+
             services.ConfigureDbContext(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -56,6 +72,15 @@ namespace Design_Bureau.Api
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+
+
+
+
+
+            app.UseAuthentication();
+
+
 
             app.UseMvc(routes =>
             {

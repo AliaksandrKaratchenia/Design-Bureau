@@ -1,7 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Design_Bureau.Api.Models;
 using Microsoft.AspNetCore.Authorization;
+using Design_Bureau.Entities;
 
 namespace Design_Bureau.Api.Controllers
 {
@@ -24,7 +26,21 @@ namespace Design_Bureau.Api.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
-            return View();
+            var designers = new List<Designer>
+            {
+                new Designer
+                {
+                    Name = "Adam"
+                },
+                new Designer
+                {
+                    Name = "Jon"
+                }};
+            var multiStoreyHouseProject = new MultiStoreyHouseProject
+            {
+                Designers = designers
+            };
+            return View(multiStoreyHouseProject);
         }
 
         public IActionResult Contact()

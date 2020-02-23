@@ -29,6 +29,7 @@ namespace Design_Bureau.Api
         public static void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule(new DalModule());
+            builder.RegisterModule(new BLLModule());        
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.

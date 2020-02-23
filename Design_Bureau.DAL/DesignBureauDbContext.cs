@@ -12,7 +12,7 @@ namespace Design_Bureau.DAL
         {
         }
 
-        //public DbSet<User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public DbSet<MultiStoreyHouseProject> MultiStoreyHouseProjects { get; set; }
 
@@ -28,6 +28,7 @@ namespace Design_Bureau.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new MultiStoreyHouseProjectConfiguration());
             modelBuilder.ApplyConfiguration(new TermsOfReferenceConfiguration());
             modelBuilder.ApplyConfiguration(new PriceDetailsConfiguration());

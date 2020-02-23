@@ -3,69 +3,78 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Design_Bureau.Api.Models;
+using Design_Bureau.BLL.Authentication__authorization;
+using Design_Bureau.BLL.Authentication__Authorization.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Design_Bureau.Api.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IUserService _service;
+
+        public AccountController(IUserService service)
+        {
+            _service = service;
+        }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new User { Username = model.UserName, Password = model.Password, Role = Role.User};
+                var identity = await _service.RegisterAsync(user);
+                if (identity == null)
+                {
+                    ModelState.AddModelError("", "Can not register, try again");
+                    return View(model);
+                }
+                var principal = new ClaimsPrincipal(identity);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                return RedirectToAction("Index", "Home");
+            }
+            return View(model);
+        }
+
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(string userName, string password)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (!string.IsNullOrEmpty(userName) && string.IsNullOrEmpty(password))
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Login");
-            }
-
-            //Check the user name and password
-            //Here can be implemented checking logic from the database
-            ClaimsIdentity identity = null;
-            bool isAuthenticated = false;
-
-            if (userName == "Admin" && password == "password")
-            {
-
-                //Create the identity for the user
-                identity = new ClaimsIdentity(new[] {
-                    new Claim(ClaimTypes.Name, userName),
-                    new Claim(ClaimTypes.Role, "Admin")
-                }, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                isAuthenticated = true;
-            }
-
-            if (userName == "Mukesh" && password == "password")
-            {
-                //Create the identity for the user
-                identity = new ClaimsIdentity(new[] {
-                    new Claim(ClaimTypes.Name, userName),
-                    new Claim(ClaimTypes.Role, "User")
-                }, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                isAuthenticated = true;
-            }
-
-            if (isAuthenticated)
-            {
+                var user = new User { Username = model.UserName, Password = model.Password };
+                var identity = _service.Authenticate(user);
+                if (identity == null)
+                {
+                    ModelState.AddModelError("", "Can not login, try again");
+                    return View(model);
+                }
                 var principal = new ClaimsPrincipal(identity);
 
-                var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                 return RedirectToAction("Index", "Home");
             }
-            return View();
+            return View(model);
         }
 
         public IActionResult Logout()
         {
-            var login = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
         }
     }

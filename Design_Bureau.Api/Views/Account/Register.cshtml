@@ -1,13 +1,15 @@
-﻿@model Design_Bureau.Api.Models.LoginViewModel
+﻿
+@model Design_Bureau.Api.Models.RegisterViewModel
+
 @{
-    Layout = "/Views/Shared/_Master.cshtml";
+    Layout = Layout = "/Views/Shared/_Master.cshtml"; ;
 }
 
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <h2><strong>Login Page </strong></h2><br />
-            <form method="post" asp-controller="Account" asp-action="Login">
+            <h2><strong>Register Page </strong></h2><br />
+            <form method="post" asp-controller="Account" asp-action="Register">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="UserName" class="control-label"></label><br />
@@ -19,10 +21,14 @@
                     <input asp-for="Password" class="form-control" placeholder="Password" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
+                <div class="form-group">
+                    <label asp-for="PasswordConfirm" class="control-label"></label><br />
+                    <input asp-for="PasswordConfirm" class="form-control" placeholder="PasswordConfirm" />
+                    <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                </div>
                 <div class="form-check">
                     <button class="btn btn-info" type="reset">Reset</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <li><a asp-area="" asp-controller="Account" asp-action="Register">Or Register</a></li>
                 </div>
             </form>
         </div>
@@ -32,3 +38,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+

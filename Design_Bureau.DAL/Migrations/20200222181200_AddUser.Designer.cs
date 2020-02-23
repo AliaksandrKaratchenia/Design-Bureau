@@ -3,14 +3,16 @@ using Design_Bureau.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Design_Bureau.DAL.Migrations
 {
     [DbContext(typeof(DesignBureauDbContext))]
-    partial class DesignBureauDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200222181200_AddUser")]
+    partial class AddUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

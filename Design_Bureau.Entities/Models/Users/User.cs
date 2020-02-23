@@ -1,4 +1,5 @@
 ﻿using Design_Bureau.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace Design_Bureau.BLL.Authentication__Authorization.Models
 {

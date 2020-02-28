@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Design_Bureau.DAL.Migrations
 {
-    public partial class CreateDbInitial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,6 +34,50 @@ namespace Design_Bureau.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PriceDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DesignCost = table.Column<double>(nullable: false),
+                    ConstructionCost = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PriceDetails", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TermsOfReferences",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: false),
+                    IsRegistered = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TermsOfReferences", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Username = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    Role = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MultiStoreyHouseProjects",
                 columns: table => new
                 {
@@ -41,6 +85,8 @@ namespace Design_Bureau.DAL.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
                     CustomerId = table.Column<int>(nullable: false),
+                    TermsOfReferenceId = table.Column<int>(nullable: false),
+                    PriceDetailsId = table.Column<int>(nullable: false),
                     ChiefDesignerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -58,6 +104,18 @@ namespace Design_Bureau.DAL.Migrations
                         principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MultiStoreyHouseProjects_PriceDetails_PriceDetailsId",
+                        column: x => x.PriceDetailsId,
+                        principalTable: "PriceDetails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MultiStoreyHouseProjects_TermsOfReferences_TermsOfReferenceId",
+                        column: x => x.TermsOfReferenceId,
+                        principalTable: "TermsOfReferences",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,7 +125,7 @@ namespace Design_Bureau.DAL.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
-                    MultiStoreyHouseProjectId = table.Column<int>(nullable: false)
+                    MultiStoreyHouseProjectId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -77,50 +135,7 @@ namespace Design_Bureau.DAL.Migrations
                         column: x => x.MultiStoreyHouseProjectId,
                         principalTable: "MultiStoreyHouseProjects",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PriceDetails",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DesignCost = table.Column<double>(nullable: false),
-                    ConstructionCost = table.Column<double>(nullable: false),
-                    MultiStoreyHouseProjectId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PriceDetails", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PriceDetails_MultiStoreyHouseProjects_MultiStoreyHouseProjectId",
-                        column: x => x.MultiStoreyHouseProjectId,
-                        principalTable: "MultiStoreyHouseProjects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TermsOfReferences",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    IsRegistered = table.Column<bool>(nullable: false),
-                    MultiStoreyHouseProjectId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TermsOfReferences", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TermsOfReferences_MultiStoreyHouseProjects_MultiStoreyHouseProjectId",
-                        column: x => x.MultiStoreyHouseProjectId,
-                        principalTable: "MultiStoreyHouseProjects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -139,15 +154,15 @@ namespace Design_Bureau.DAL.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PriceDetails_MultiStoreyHouseProjectId",
-                table: "PriceDetails",
-                column: "MultiStoreyHouseProjectId",
+                name: "IX_MultiStoreyHouseProjects_PriceDetailsId",
+                table: "MultiStoreyHouseProjects",
+                column: "PriceDetailsId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_TermsOfReferences_MultiStoreyHouseProjectId",
-                table: "TermsOfReferences",
-                column: "MultiStoreyHouseProjectId",
+                name: "IX_MultiStoreyHouseProjects_TermsOfReferenceId",
+                table: "MultiStoreyHouseProjects",
+                column: "TermsOfReferenceId",
                 unique: true);
         }
 
@@ -157,10 +172,7 @@ namespace Design_Bureau.DAL.Migrations
                 name: "Designers");
 
             migrationBuilder.DropTable(
-                name: "PriceDetails");
-
-            migrationBuilder.DropTable(
-                name: "TermsOfReferences");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "MultiStoreyHouseProjects");
@@ -170,6 +182,12 @@ namespace Design_Bureau.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "PriceDetails");
+
+            migrationBuilder.DropTable(
+                name: "TermsOfReferences");
         }
     }
 }

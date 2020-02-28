@@ -22,39 +22,6 @@ namespace Design_Bureau.Api.Controllers
             return View();
         }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            var designers = new List<Designer>
-            {
-                new Designer
-                {
-                    Name = "Adam"
-                },
-                new Designer
-                {
-                    Name = "Jon"
-                }};
-            var multiStoreyHouseProject = new MultiStoreyHouseProject
-            {
-                Designers = designers
-            };
-            return View(multiStoreyHouseProject);
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

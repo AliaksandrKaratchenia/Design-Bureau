@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Design_Bureau.Api.Models;
 using Design_Bureau.BLL.Authentication__authorization;
 using Design_Bureau.BLL.Authentication__Authorization.Models;
+using Design_Bureau.DAL.Repositories;
+using Design_Bureau.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
@@ -16,10 +18,14 @@ namespace Design_Bureau.Api.Controllers
     public class AccountController : Controller
     {
         private readonly IUserService _service;
+        private readonly IRepository<ChiefDesigner> _chiefRepository;
+        private readonly IRepository<Customer> _customerRepository;
 
-        public AccountController(IUserService service)
+        public AccountController(IUserService service, IRepository<ChiefDesigner> chiefRepository, IRepository<Customer> customerRepository)
         {
             _service = service;
+            _chiefRepository = chiefRepository;
+            _customerRepository = customerRepository;
         }
 
         public IActionResult Register()
@@ -32,12 +38,22 @@ namespace Design_Bureau.Api.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { Username = model.UserName, Password = model.Password, Role = Role.User};
+                var user = new User { Username = model.UserName, Password = model.Password };
+                user.Role = user.Username.Contains("@admin") ? Role.Admin : Role.User;
                 var identity = await _service.RegisterAsync(user);
                 if (identity == null)
                 {
                     ModelState.AddModelError("", "Can not register, try again");
                     return View(model);
+                }
+
+                if (user.Role == Role.Admin)
+                {
+                    await _chiefRepository.Insert(new ChiefDesigner { Name = model.UserName });
+                }
+                else
+                {
+                    await _customerRepository.Insert(new Customer { Name = model.UserName });
                 }
                 var principal = new ClaimsPrincipal(identity);
 

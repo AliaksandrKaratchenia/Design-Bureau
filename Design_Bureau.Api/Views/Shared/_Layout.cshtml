@@ -8,6 +8,7 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -30,10 +31,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Setting">Setting</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    @* <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li> *@
+                    @* <li><a asp-area="" asp-controller="Home" asp-action="Setting">Setting</a></li> *@
+                    @* <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li> *@
+                    <li><a asp-area="" asp-controller="MultiStoreyHouseProjects" asp-action="Index">Multi Storey House Project</a></li>
+                    <li><a asp-area="" asp-controller="TermsOfReferences" asp-action="Index">Terms of reference</a></li>
+                    <li><a asp-area="" asp-controller="Designers" asp-action="Index">Designers</a></li>
+                    <li><a asp-area="" asp-controller="PriceDetails" asp-action="Index">Price Details</a></li>
+                    <li><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
                 </ul>
             </div>
         </div>

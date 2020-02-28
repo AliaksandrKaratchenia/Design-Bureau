@@ -10,6 +10,7 @@ namespace Design_Bureau.DAL.Configurations
         {
             builder.HasKey(a => a.Id);
             builder.Property(a => a.Name).IsRequired();
+            builder.Property(a => a.Description).IsRequired();
         }
     }
 }

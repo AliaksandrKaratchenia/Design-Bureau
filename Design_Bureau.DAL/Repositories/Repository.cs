@@ -49,14 +49,20 @@ namespace Design_Bureau.DAL.Repositories
             return Save();
         }
 
-        public void Update(T entity)
+        public Task Update(T entity)
         {
             _dbSet.Update(entity);
+            return Save();
         }
 
         private Task Save()
         {
             return DesignBureauDbContext.SaveChangesAsync();
+        }
+
+        public IQueryable<T> GetAll()
+        {
+            return _dbSet.AsQueryable();
         }
     }
 }

@@ -9,12 +9,14 @@ namespace Design_Bureau.DAL.Repositories
     {
         T Get(int id);
 
+        IQueryable<T> GetAll();
+
         IQueryable<T> Find(Expression<Func<T, bool>> expression);
 
         Task Insert(T entity);
 
         Task Delete(T entity);
 
-        void Update(T entity);
+        Task Update(T entity);
     }
 }

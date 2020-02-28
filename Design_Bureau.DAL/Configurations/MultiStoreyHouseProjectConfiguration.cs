@@ -13,19 +13,18 @@ namespace Design_Bureau.DAL.Configurations
 
             builder.HasOne(p => p.TermsOfReference)
                 .WithOne(t => t.MultiStoreyHouseProject)
-                .HasForeignKey<TermsOfReference>(t => t.MultiStoreyHouseProjectId);
+                .HasForeignKey<MultiStoreyHouseProject>(t => t.TermsOfReferenceId);
 
             builder.HasOne(p => p.PriceDetails)
                 .WithOne(t => t.MultiStoreyHouseProject)
-                .HasForeignKey<PriceDetails>(d => d.MultiStoreyHouseProjectId);
+                .HasForeignKey<MultiStoreyHouseProject>(d => d.PriceDetailsId);
 
             builder.HasOne(p => p.ChiefDesigner)
                 .WithMany(t => t.MultiStoreyHouseProjects)
                 .HasForeignKey(c => c.ChiefDesignerId);
 
             builder.HasMany(p => p.Designers)
-                .WithOne(t => t.MultiStoreyHouseProject)
-                .HasForeignKey(c => c.MultiStoreyHouseProjectId);
+                .WithOne(t => t.MultiStoreyHouseProject);
 
             builder.HasOne(p => p.Customer)
                 .WithMany(t => t.MultiStoreyHouseProjects)

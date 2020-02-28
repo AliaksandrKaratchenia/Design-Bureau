@@ -1,0 +1,66 @@
+﻿@model Design_Bureau.Entities.MultiStoreyHouseProject
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MultiStoreyHouseProject</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TermsOfReference)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TermsOfReference.Name)
+        </dd>
+        <dd>
+            @Html.DisplayTextFor(model => model.TermsOfReference.IsRegistered)
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.TermsOfReference.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceDetails)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriceDetails.DesignCost)
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.PriceDetails.ConstructionCost)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ChiefDesigner)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ChiefDesigner.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Designers)
+        </dt>
+        @foreach (var designer in Model.Designers)
+        {
+            <dd>
+                @Html.DisplayFor(modelItem => designer.Name)
+            </dd>
+        }
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,51 @@
+﻿@model Design_Bureau.Entities.MultiStoreyHouseProject
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>MultiStoreyHouseProject</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TermsOfReference)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TermsOfReference.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceDetails)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriceDetails.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ChiefDesigner)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ChiefDesigner.Name)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
